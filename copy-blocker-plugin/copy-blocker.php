@@ -40,7 +40,7 @@ function wpb_copy_text_blocker(){
     $t_name = $wpdb->prefix . 'co_pro_disclaimer';
     $dis_message = $wpdb->get_var("SELECT disclaimer FROM $t_name ORDER BY id DESC LIMIT 1");
     
-  $cm_de = str_replace('\\','',$dis_message);
+    $cm_de = str_replace('\\','',$dis_message);
     echo '<script defer>
     document.addEventListener(\'copy\', (event) => {
   const disclaimer = \'' . $cm_de . '\';
@@ -69,10 +69,12 @@ function wpb_just_support_fn_hsafksa_haedzgkdagk_krfhuasdfb(){
   echo "<div class=\"wrap\">
   <h2>Just testing my custom dashboard</h2>
   <p><strong>Current Disclaimer:</strong> $cm_de</p>
-      <form method=\"post\" action\"/change_disclaimer\">
-  <p>Current disclaimer:</p>
-  <textarea name=\"disc\" rows=\"2\" cols=\"80\">$cm_de</textarea>
-         <button type=\"submit\">CHANGE</button> 
+      <form method=\"post\" width=\"50vw\" >
+  <p>Unsaved disclaimer:</p>
+  <input name=\"disc\" class=\"regular-text ltr\" value= \"$cm_de\">
+  <br>
+  <br>
+         <button type=\"submit\" class=\"button button-primary\">CHANGE</button> 
     </form>
   </div>";
 

@@ -3,12 +3,14 @@
  * Plugin Name: Copy protection
  * Version: 1.0.0
  * Description: This is simple lightweight plugin that stops users from stealing/copying your content
+ * License: MIT
+ *
 */
 if (!defined('ABSPATH')){
   die('Something is wrong');
 }
 
-//activation function is failing(it must be caused by the SQL statement)
+//activation function sets up wp_co_pro_disclaimer table to save all disclaimers 
 function wpb_copy_protection_plugin_activation(){
   global $wpdb;
   $t_name = 'co_pro_disclaimer';
@@ -74,6 +76,12 @@ function wpb_just_support_fn_hsafksa_haedzgkdagk_krfhuasdfb(){
   <input name=\"disc\" class=\"regular-text ltr\" value= \"$cm_de\">
   <br>
   <br>
+  <select name=\"update_options\" >
+  <option value=\"reset\">RESET</option>
+  <option selected value=\"update\">UPDATE</option>
+  </select>
+  <br>
+  <br>
          <button type=\"submit\" class=\"button button-primary\">CHANGE</button> 
     </form>
   </div>";
@@ -85,6 +93,10 @@ function wpb_push_the_copy_blocker_message_change(){
     global $wpdb;
     $t_name = $wpdb->prefix . 'co_pro_disclaimer';
     $wpdb->insert($t_name,array('disclaimer'=>$changed_v));
+    if (strcmp($_POST['update_options'],"reset")==0) {
+      #It may look like this string is vulnerable to SQL injection, but because no user input is accepted here, the code is safe
+      $wpdb->query("DELETE FROM " . $t_name . " WHERE id != 1;");
+    }
   }
 
 }

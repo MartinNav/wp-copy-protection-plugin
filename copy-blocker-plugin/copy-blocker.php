@@ -1,8 +1,8 @@
 <?php
 /*
- * Plugin Name: Copy protection
+ * Plugin Name: Copyright protection plugin
  * Version: 1.0.0
- * Description: This is simple lightweight plugin that stops users from stealing/copying your content
+ * Description: This is simple lightweight plugin that stops users from stealing/copying your content. Site users will recieve administrator defined disclaimer instead of page content when trying to copy the content.
  * License: MIT
  *
 */
@@ -55,7 +55,7 @@ function wpb_custom_config_submenu_page(){
   add_submenu_page(
     'tools.php',
     'Copy Blocker',
-    'Copy Blocker Plugin Dashboard',
+    'Copyright protection dashboard',
     'manage_options',
     'copy-block-menu',
     'wpb_just_support_fn_hsafksa_haedzgkdagk_krfhuasdfb'
@@ -82,14 +82,14 @@ function wpb_just_support_fn_hsafksa_haedzgkdagk_krfhuasdfb(){
   </select>
   <br>
   <br>
-         <button type=\"submit\" class=\"button button-primary\">CHANGE</button> 
+         <button type=\"submit\" class=\"button button-primary\">APPLY</button> 
     </form>
   </div>";
 
 }
 function wpb_push_the_copy_blocker_message_change(){
   if (is_admin()&&isset($_POST['disc'])&&isset($_SERVER['HTTP_REFERER'])&&str_contains($_SERVER['HTTP_REFERER'],'wp-admin/tools.php')){
-    $changed_v = $_POST['disc'];
+    $changed_v = str_replace( '"','\\"', $_POST['disc']);
     global $wpdb;
     $t_name = $wpdb->prefix . 'co_pro_disclaimer';
     $wpdb->insert($t_name,array('disclaimer'=>$changed_v));
